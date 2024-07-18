@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 
 
 class GUI:
-    def __init__(self, callback, assets_dir="assets"):
+    def __init__(self, callback, assets_dir="assets", logger=None):
         self.root = tk.Tk()
         self.frame = tk.Frame(self.root)
         self.frame.grid(row=0, column=0)
@@ -68,63 +68,75 @@ class GUI:
         self.callback = callback
         self.buttons_states[4] = ord('s')
         self.callback(self.buttons_states, self.slider.get())
+        self.logger = logger
 
         self.root.mainloop()
 
     def up(self):
-        print("Up")
+        if self.logger is not None:
+            self.logger.info("Up")
         self.up_button.config(image=self.up_active_image)
         self.buttons_states[0] = 1
         self.callback(self.buttons_states, self.slider.get())
 
     def down(self):
-        print("Down")
+        if self.logger is not None:
+            self.logger.info("Down")
         self.down_button.config(image=self.down_active_image)
         self.buttons_states[2] = 1
         self.callback(self.buttons_states, self.slider.get())
 
     def left(self):
-        print("Left")
+        if self.logger is not None:
+            self.logger.info("Left")
         self.left_button.config(image=self.left_active_image)
         self.buttons_states[3] = 1
         self.callback(self.buttons_states, self.slider.get())
 
     def right(self):
-        print("Right")
+        if self.logger is not None:
+            self.logger.info("Right")
         self.right_button.config(image=self.right_active_image)
         self.buttons_states[1] = 1
         self.callback(self.buttons_states, self.slider.get())
+
     def stop(self):
-        print("Stop")
+        if self.logger is not None:
+            self.logger.info("Stop")
         self.buttons_states[4] = ord('s')
         self.callback(self.buttons_states, self.slider.get())
 
     def reset_up(self):
-        print("Up release")
+        if self.logger is not None:
+            self.logger.info("Up released")
         self.up_button.config(image=self.up_image)
         self.buttons_states[0] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def reset_down(self):
-        print("Down release")
+        if self.logger is not None:
+            self.logger.info("Down released")
         self.down_button.config(image=self.down_image)
         self.buttons_states[2] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def reset_left(self):
-        print("Left release")
+        if self.logger is not None:
+            self.logger.info("Left released")
         self.left_button.config(image=self.left_image)
         self.buttons_states[3] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def reset_right(self):
-        print("Right release")
+        if self.logger is not None:
+            self.logger.info("Right released")
         self.right_button.config(image=self.right_image)
         self.buttons_states[1] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def slider_changed(self):
-        print(f"Slider in state: {self.slider.get()}")
+        if self.logger is not None:
+            self.logger.info(f"Slider in state: {self.slider.get()}")
 
     def on_shutdown(self):
         self.root.destroy()

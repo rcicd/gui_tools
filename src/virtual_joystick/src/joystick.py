@@ -15,7 +15,7 @@ class VirtualJoystick(Node):
         self.vehicle = self.get_parameter("vehicle").get_parameter_value().string_value
         self.assets_dir = self.get_parameter("assets_dir").get_parameter_value().string_value
         self.publisher = self.create_publisher(Joy, f"/{self.vehicle}/virtual_joystick", 1)
-        self.gui = GUI(callback=lambda buttons, scale: self.callback(buttons, scale), assets_dir=self.assets_dir)
+        self.gui = GUI(callback=lambda buttons, scale: self.callback(buttons, scale), assets_dir=self.assets_dir, logger=None)
 
     def callback(self, buttons, scale):
         msg = Joy()
