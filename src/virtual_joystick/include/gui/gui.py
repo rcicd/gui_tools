@@ -193,7 +193,8 @@ class GUI:
             label.config(fg="black")
         # Set the selected movement label to green
         self.movement_labels[key].config(fg="green")
-        print(f"Movement state {key} toggled")
+        if self.logger is not None:
+            self.logger.info(f"Movement state {key} toggled")
 
     def toggle_other_state(self, key):
         label = self.other_labels.get(key)
@@ -201,7 +202,8 @@ class GUI:
             current_color = label.cget("fg")
             new_color = "green" if current_color == "black" else "black"
             label.config(fg=new_color)
-            print(f"Other state {key} toggled to {new_color}")
+            if self.logger is not None:
+                self.logger.info(f"Other state {key} toggled to {new_color}")
 
     def on_shutdown(self):
         self.root.destroy()
