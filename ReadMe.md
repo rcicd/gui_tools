@@ -30,4 +30,4 @@ cd ./gui_tools
 ```shell
 ./virtual_joystick.sh <BOT_NAME>
 ```
-3. To stop the program press `ctrl+c`
+3. To stop the program just close the window
