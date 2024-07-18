@@ -3,34 +3,34 @@ from PIL import Image, ImageTk
 
 
 class GUI:
-    def __init__(self, callback):
+    def __init__(self, callback, assets_dir="assets"):
         self.root = tk.Tk()
         self.frame = tk.Frame(self.root)
         self.frame.grid(row=0, column=0)
 
-        self.up_image = tk.PhotoImage(file="assets/up.png")
-        self.up_active_image = tk.PhotoImage(file="assets/up_active.png")
+        self.up_image = tk.PhotoImage(file=f"{assets_dir}/up.png")
+        self.up_active_image = tk.PhotoImage(file=f"{assets_dir}/up_active.png")
         self.up_button = tk.Label(self.frame, image=self.up_image)
         self.up_button.grid(row=0, column=1)
 
-        self.down_image = tk.PhotoImage(file="assets/down.png")
-        self.down_active_image = tk.PhotoImage(file="assets/down_active.png")
+        self.down_image = tk.PhotoImage(file=f"{assets_dir}/down.png")
+        self.down_active_image = tk.PhotoImage(file=f"{assets_dir}/down_active.png")
         self.down_button = tk.Label(self.frame, image=self.down_image)
         self.down_button.grid(row=2, column=1)
 
-        image = Image.open("assets/logo.png")
+        image = Image.open(f"{assets_dir}/logo.png")
         image = image.resize((327, 327))
         self.center_image = ImageTk.PhotoImage(image)
         self.center_label = tk.Label(self.frame, image=self.center_image)
         self.center_label.grid(row=1, column=1)
 
-        self.left_image = tk.PhotoImage(file="assets/left.png")
-        self.left_active_image = tk.PhotoImage(file="assets/left_active.png")
+        self.left_image = tk.PhotoImage(file=f"{assets_dir}/left.png")
+        self.left_active_image = tk.PhotoImage(file=f"{assets_dir}/left_active.png")
         self.left_button = tk.Label(self.frame, image=self.left_image)
         self.left_button.grid(row=1, column=0)
 
-        self.right_image = tk.PhotoImage(file="assets/right.png")
-        self.right_active_image = tk.PhotoImage(file="assets/right_active.png")
+        self.right_image = tk.PhotoImage(file=f"{assets_dir}/right.png")
+        self.right_active_image = tk.PhotoImage(file=f"{assets_dir}/right_active.png")
         self.right_button = tk.Label(self.frame, image=self.right_image)
         self.right_button.grid(row=1, column=2)
 
@@ -66,6 +66,8 @@ class GUI:
         self.buttons_states = [0, 0, 0, 0, 0]
 
         self.callback = callback
+        self.buttons_states[4] = ord('s')
+        self.callback(self.buttons_states, self.slider.get())
 
         self.root.mainloop()
 
@@ -118,11 +120,11 @@ class GUI:
     def reset_right(self):
         print("Right release")
         self.right_button.config(image=self.right_image)
-        self.buttons_states[1] = 1
+        self.buttons_states[1] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def slider_changed(self):
         print(f"Slider in state: {self.slider.get()}")
 
-
-GUI(lambda x, y: x[0]-y)
+    def on_shutdown(self):
+        self.root.destroy()
