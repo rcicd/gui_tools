@@ -51,10 +51,14 @@ class GUI:
         # List here all driving states. Only one of them can be active. In the array of buttons states ascii code of
         # symbol will be written on the 4th position
         self.movement_states = {'a': 'autonomous', 's': 'manual'}
+        # Bind key for autonomous driving
+        self.root.bind('<s>', lambda event: self.movement_states_change('s'))
+        self.root.bind('<a>', lambda event: self.movement_states_change('a'))
 
         # List here all states which can be toggled, first element of tuple is description, second is position
         # in array of buttons states which will be sent to bot, so don't overwrite already existing states
         self.other_states = {'o': ('Toggle OrbSlam node', 5)}
+        self.root.bind('<o>', lambda event: self.other_state_change('o'))
 
         self.movement_labels = {}
         self.other_labels = {}
@@ -99,12 +103,6 @@ class GUI:
         self.root.bind('<KeyRelease-Down>', lambda event: self.reset_down())
         self.root.bind('<KeyRelease-Left>', lambda event: self.reset_left())
         self.root.bind('<KeyRelease-Right>', lambda event: self.reset_right())
-
-        # Bind key for autonomous driving
-        self.root.bind('<s>', lambda event: self.movement_states_change('s'))
-        self.root.bind('<a>', lambda event: self.movement_states_change('a'))
-
-        self.root.bind('<p>', lambda event: self.other_state_change('p'))
 
         self.buttons_states = [0, 0, 0, 0, 0]
 
