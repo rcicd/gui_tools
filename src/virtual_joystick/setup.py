@@ -25,7 +25,8 @@ setup(
                    ('share/' + package_name + '/src', glob('src/*.py')),
                    ('lib/' + package_name, glob('src/*.py'))
                ]
-            + [map_recursive_files('share/' + package_name, 'include/' + x) for x in os.listdir('include')],
+            + [map_recursive_files('share/' + package_name, 'include/' + x) for x in os.listdir('include')]
+            + [map_recursive_files('share/' + package_name, 'config/' + x) for x in os.listdir('config')],
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Ilia.Nechaev',

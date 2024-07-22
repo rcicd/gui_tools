@@ -1,8 +1,27 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
+
+class MovementStatesCallback:
+    def __init__(self, state, gui):
+        self.state = state
+        self.gui = gui
+
+    def callback(self, event):
+        self.gui.movement_states_change(self.state)
+
+
+class ToggleStatesCallback:
+    def __init__(self, state, gui):
+        self.state = state
+        self.gui = gui
+
+    def callback(self, event):
+        self.gui.other_state_change(self.state)
+
+
 class GUI:
-    def __init__(self, callback, assets_dir="assets", logger=None):
+    def __init__(self, callback, assets_dir="assets", movement_states=None, toggle_states=None, logger=None):
         self.root = tk.Tk()
         self.frame = tk.Frame(self.root)
         self.frame.grid(row=0, column=0)
@@ -50,15 +69,25 @@ class GUI:
 
         # List here all driving states. Only one of them can be active. In the array of buttons states ascii code of
         # symbol will be written on the 4th position
-        self.movement_states = {'a': 'autonomous', 's': 'manual'}
+        # self.movement_states = {'a': 'autonomous', 's': 'manual'}
+        self.movement_states = movement_states
+        self.movement_states['s'] = "manual"
+        self.movement_callbacks = []
         # Bind key for autonomous driving
-        self.root.bind('<s>', lambda event: self.movement_states_change('s'))
-        self.root.bind('<a>', lambda event: self.movement_states_change('a'))
+        for key in self.movement_states.keys():
+            self.movement_callbacks.append(MovementStatesCallback(key, self))
+            self.root.bind(f'<{key}>', self.movement_callbacks[-1].callback)
+        # self.root.bind('<s>', lambda event: self.movement_states_change('s'))
+        # self.root.bind('<a>', lambda event: self.movement_states_change('a'))
 
         # List here all states which can be toggled, first element of tuple is description, second is position
         # in array of buttons states which will be sent to bot, so don't overwrite already existing states
-        self.other_states = {'o': ('Toggle OrbSlam node', 5)}
-        self.root.bind('<o>', lambda event: self.other_state_change('o'))
+        self.toggle_states = toggle_states
+        self.toggle_callbacks = []
+        for key in self.toggle_states.keys():
+            self.toggle_callbacks.append(ToggleStatesCallback(key, self))
+            self.root.bind(f'<{key}>', self.toggle_callbacks[-1].callback)
+        # self.root.bind('<o>', lambda event: self.other_state_change('o'))
 
         self.movement_labels = {}
         self.other_labels = {}
@@ -79,7 +108,7 @@ class GUI:
         other_section = tk.LabelFrame(self.tools_frame, text="Other Functions", padx=10, pady=10, font=("Helvetica", 16))
         other_section.pack(fill="both", expand="yes", padx=10, pady=10)
 
-        for key, value in self.other_states.items():
+        for key, value in self.toggle_states.items():
             label = tk.Label(other_section, text=f"{key} : {value[0]}", fg="black", font=("Helvetica", 14), anchor="w")
             label.pack(fill="x", pady=5)
             self.other_labels[key] = label
@@ -148,10 +177,10 @@ class GUI:
 
     def other_state_change(self, state):
         if self.logger is not None:
-            self.logger.info(self.other_states[state][0])
-        if len(self.buttons_states) <= self.other_states[state][1]:
-            self.buttons_states.extend([0]*(self.other_states[state][1] - len(self.buttons_states) + 1))
-        self.buttons_states[self.other_states[state][1]] = int(self.other_labels.get(state).cget("fg") == "black")
+            self.logger.info(self.toggle_states[state][0])
+        if len(self.buttons_states) <= self.toggle_states[state][1]:
+            self.buttons_states.extend([0]*(self.toggle_states[state][1] - len(self.buttons_states) + 1))
+        self.buttons_states[self.toggle_states[state][1]] = int(self.other_labels.get(state).cget("fg") == "black")
         self.callback(self.buttons_states, self.slider.get())
         self.toggle_other_state(state)
 
