@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 import rclpy
-from std_msgs.msg import Float64MultiArray
 from sensor_msgs.msg import CompressedImage
 from rclpy.node import Node
 from sensor_msgs.srv import SetCameraInfo
-import PIL
 from PIL import Image
 import cv_bridge
 import numpy as np

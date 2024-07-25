@@ -142,42 +142,42 @@ class GUI:
 
     def up(self):
         if self.logger is not None:
-            self.logger.info("Up")
+            self.logger.debug("Up")
         self.up_button.config(image=self.up_active_image)
         self.buttons_states[0] = 1
         self.callback(self.buttons_states, self.slider.get())
 
     def down(self):
         if self.logger is not None:
-            self.logger.info("Down")
+            self.logger.debug("Down")
         self.down_button.config(image=self.down_active_image)
         self.buttons_states[2] = 1
         self.callback(self.buttons_states, self.slider.get())
 
     def left(self):
         if self.logger is not None:
-            self.logger.info("Left")
+            self.logger.debug("Left")
         self.left_button.config(image=self.left_active_image)
         self.buttons_states[3] = 1
         self.callback(self.buttons_states, self.slider.get())
 
     def right(self):
         if self.logger is not None:
-            self.logger.info("Right")
+            self.logger.debug("Right")
         self.right_button.config(image=self.right_active_image)
         self.buttons_states[1] = 1
         self.callback(self.buttons_states, self.slider.get())
 
     def movement_states_change(self, state):
         if self.logger is not None:
-            self.logger.info(self.movement_states[state])
+            self.logger.debug(self.movement_states[state])
         self.buttons_states[4] = ord(state)
         self.callback(self.buttons_states, self.slider.get())
         self.toggle_movement_state(state)
 
     def other_state_change(self, state):
         if self.logger is not None:
-            self.logger.info(self.toggle_states[state][0])
+            self.logger.debug(self.toggle_states[state][0])
         if len(self.buttons_states) <= self.toggle_states[state][1]:
             self.buttons_states.extend([0]*(self.toggle_states[state][1] - len(self.buttons_states) + 1))
         self.buttons_states[self.toggle_states[state][1]] = int(self.other_labels.get(state).cget("fg") == "black")
@@ -186,35 +186,35 @@ class GUI:
 
     def reset_up(self):
         if self.logger is not None:
-            self.logger.info("Up released")
+            self.logger.debug("Up released")
         self.up_button.config(image=self.up_image)
         self.buttons_states[0] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def reset_down(self):
         if self.logger is not None:
-            self.logger.info("Down released")
+            self.logger.debug("Down released")
         self.down_button.config(image=self.down_image)
         self.buttons_states[2] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def reset_left(self):
         if self.logger is not None:
-            self.logger.info("Left released")
+            self.logger.debug("Left released")
         self.left_button.config(image=self.left_image)
         self.buttons_states[3] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def reset_right(self):
         if self.logger is not None:
-            self.logger.info("Right released")
+            self.logger.debug("Right released")
         self.right_button.config(image=self.right_image)
         self.buttons_states[1] = 0
         self.callback(self.buttons_states, self.slider.get())
 
     def slider_changed(self):
         if self.logger is not None:
-            self.logger.info(f"Slider in state: {self.slider.get()}")
+            self.logger.debug(f"Slider in state: {self.slider.get()}")
 
     def toggle_movement_state(self, key):
         # Reset all movement labels
@@ -223,7 +223,7 @@ class GUI:
         # Set the selected movement label to green
         self.movement_labels[key].config(fg="green")
         if self.logger is not None:
-            self.logger.info(f"Movement state {key} toggled")
+            self.logger.debug(f"Movement state {key} toggled")
 
     def toggle_other_state(self, key):
         label = self.other_labels.get(key)
@@ -232,7 +232,7 @@ class GUI:
             new_color = "green" if current_color == "black" else "black"
             label.config(fg=new_color)
             if self.logger is not None:
-                self.logger.info(f"Other state {key} toggled to {new_color}")
+                self.logger.debug(f"Other state {key} toggled to {new_color}")
 
     def on_shutdown(self):
         self.root.destroy()

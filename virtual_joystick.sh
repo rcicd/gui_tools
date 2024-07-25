@@ -6,7 +6,9 @@ then
   echo "Need robot name"
   exit 1
 fi
-source /opt/ros/iron/setup.bash
-source ./install/setup.bash
 
-ros2 launch virtual_joystick virtual_joystick.launch vehicle:="$1"
+docker run --entrypoint /app/virtual_joystick.sh \
+        -e DISPLAY=$DISPLAY \
+        --network=host \
+        -v /tmp/.X11-unix:/tmp/.X11-unix:rw   \
+        -it --rm spgc/gui_tools:latest $1
