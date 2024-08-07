@@ -1,0 +1,4 @@
+/**:
+  ros__parameters:
+    movement_states: ["a:autonomous"]
+    toggle_states: ["o:Toggle OrbSlam node:5"]

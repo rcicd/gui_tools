@@ -1,0 +1,14 @@
+<launch>
+    <arg name="vehicle"/>
+
+    <node
+        pkg="virtual_joystick"
+        exec="joystick.py"
+        name="joystick_node"
+        output="screen"
+    >
+    <param name="vehicle" value="$(var vehicle)" />
+    <param name="assets_dir" value="$(find-pkg-share virtual_joystick)/assets"/>
+    <param from="$(find-pkg-share virtual_joystick)/config/virtual_joystick/default.yaml"/>
+    </node>
+</launch>
