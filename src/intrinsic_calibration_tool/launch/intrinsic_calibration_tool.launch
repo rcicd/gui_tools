@@ -1,0 +1,13 @@
+<launch>
+    <arg name="vehicle"/>
+
+    <node
+        pkg="intrinsic_calibration_tool"
+        exec="intrinsic_calibration_node.py"
+        name="intrinsic_calibration_node"
+        output="screen"
+    >
+    <param name="vehicle" value="$(var vehicle)" />
+    <param name="assets_dir" value="$(find-pkg-share intrinsic_calibration_tool)/assets"/>
+    </node>
+</launch>

@@ -1,0 +1,21 @@
+_________________________
+|rot1/2 |rot1/2 |rot1/2 |
+|str    |str    |str    |
+|-------|-------|--------
+|rot1/2 |rot1/2 |rot1/2 |
+|str    |str    |str    |
+|-------|-------|--------
+|rot1/2 |rot1/2 |rot1/2 |
+|str    |str    |str    |
+-------------------------
+Sum: 3*9 = 27
+In addition: 1 big straight, 2 big with rotations
+Total: 27+1+2 = 30
+
+Small sample:
+    130>width_diff > 90
+    170>height_diff > 130
+
+Big sample:
+    width_diff > 240
+    height_diff > 320
