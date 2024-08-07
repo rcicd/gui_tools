@@ -6,7 +6,9 @@ then
   echo "Need robot name"
   exit 1
 fi
-source /opt/ros/iron/setup.bash
-source ./install/setup.bash
 
-ros2 launch intrinsic_calibration_tool intrinsic_calibration_tool.launch vehicle:="$1"
+docker run --entrypoint /app/intrinsic_calibration_tool.sh \
+        -e DISPLAY=$DISPLAY \
+        --network=host \
+        -v /tmp/.X11-unix:/tmp/.X11-unix:rw   \
+        -it --rm spgc/gui_tools:latest $1
