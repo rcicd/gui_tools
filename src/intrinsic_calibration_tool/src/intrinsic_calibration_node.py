@@ -109,7 +109,7 @@ class IntrinsicCalibrationNode(Node):
                     self.big_calibration_table[rotation] = 1
                     self.update_points(corners2)
                     self.gui.update_big_table(self.big_calibration_table)
-                    if self.calibration_table.sum() + self.big_calibration_table.sum() == 30:
+                    if self.calibration_table.sum() + self.big_calibration_table.sum() >= 27:
                         self.gui.enable_button()
             elif chessboard_size == -1:
                 rotation = self.determine_rotation(corners2)
@@ -118,7 +118,7 @@ class IntrinsicCalibrationNode(Node):
                     self.calibration_table[rotation, row, column] = 1
                     self.update_points(corners2)
                     self.gui.update_tables(self.calibration_table)
-                    if self.calibration_table.sum() + self.big_calibration_table.sum() == 30:
+                    if self.calibration_table.sum() + self.big_calibration_table.sum() >= 27:
                         self.gui.enable_button()
             cv2.drawChessboardCorners(raw_image, (7, 5), corners2, ret)
         pil_image = Image.fromarray(cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB))
