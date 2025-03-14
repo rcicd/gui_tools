@@ -33,7 +33,7 @@ setup(
     maintainer_email='lelikk2002@gmail.com',
     description='TODO: Package description',
     license='MIT',
-    tests_require=['pytest'],
+    # tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             "intrinsic_calibration_node = intrinsic_calibration_tool.intrinsic_calibration_node:main"
