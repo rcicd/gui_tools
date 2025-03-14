@@ -1,12 +1,14 @@
 #!/bin/bash
 
+export ROS_DISTRO=humble
+
 source /opt/ros/$ROS_DISTRO/setup.bash
 
 pip3 install -r requirements.txt
 
 rosdep init
 rosdep update
-rosdep install -y --from-path ./src --rosdistro=iron
+rosdep install -y --from-path ./src --rosdistro=$ROS_DISTRO
 
 colcon build
 
