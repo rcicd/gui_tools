@@ -1,10 +1,10 @@
 #!/bin/bash
 
-source /opt/ros/iron/setup.bash
+source /opt/ros/$ROS_DISTRO/setup.bash
 
 rosdep init
-rosdep update --rosdistro=iron
-rosdep install -y --from-path ./src --rosdistro=iron
+rosdep update --rosdistro=$ROS_DISTRO
+rosdep install -y --from-path ./src --rosdistro=$ROS_DISTRO
 
 colcon build
 

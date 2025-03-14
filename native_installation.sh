@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /opt/ros/iron/setup.bash
+source /opt/ros/$ROS_DISTRO/setup.bash
 
 pip3 install -r requirements.txt
 
