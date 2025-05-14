@@ -25,5 +25,5 @@ if [ ! -e ./assets/flag ]; then
     mv ./tmp/virtual_joystick.sh ./assets
 
     rm -rf ./tmp
-    touch ./assets/flag
+    echo "flag" > ./assets/flag
 fi

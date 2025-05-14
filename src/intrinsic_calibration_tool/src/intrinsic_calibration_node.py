@@ -136,13 +136,11 @@ class IntrinsicCalibrationNode(Node):
         request.camera_info.height = self.image_size[0]
         request.camera_info.width = self.image_size[1]
         request.camera_info.distortion_model = "plumb_bob"
-        request.camera_info.d = dist.reshape((5,))
+        request.camera_info.d = dist[0].tolist()[:5]
         request.camera_info.k = mtx.reshape((9,))
         self.result = self.intrinsic_publisher.call_async(request)
         self.get_logger().info(f"Mtx: \n{mtx.reshape((9,))}\n Dist: \n{dist}\n")
-        # rclpy.spin_until_future_complete(self, result)
-        # rate = self.create_rate(1)
-        # rate.sleep()
+
 
     def validate_service(self):
         self.get_logger().info(f"Intrinsics set status: {self.result.done()}")
